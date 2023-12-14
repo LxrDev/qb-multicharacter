@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>qb-multi</title>
+      <link rel="stylesheet" href="../assets/css/app.css">
+  </head>
+  <div id="app">
+      <div class="welcomescreen" v-if="loading">
+        <div class="loading-rondje">
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            <p id="loading-text">Loading Characters</p>
+        </div>
+      </div>
+    <div class="container" v-if="nui">
+
+      <div class="borderagam2"></div>
+      <div class="borderagam3"></div>
+      <div v-if="selectionmenu">
+        <div class="character"><h1>Character selection</h1><iconbg><icon></icon></iconbg></div>
+        <div class="start" v-for="data in playerinfo">
+        </div>
+      </div>
+
+
+      <div class="infobg" v-for="data in playerinfo">
+        <h1>{{data.firstname}} {{data.lastname}}</h1>
+        <iconbg></iconbg>
+        <icon></icon>
+      </div>
+
+      <div class="start" v-for="data in playerinfo">
+        <h1 @click="startcharacter()">Start</h1>
+      </div>
+
+
+
+      <div class="levelbg" v-for="table in playerinfo">
+        <h1>Level</h1>
+        <h2>{{table.level}}</h2>
+        <loadbg><load :style="{'width': `${table.levelcount}%`}" ></load></loadbg>
+      </div>
+
+
+      <div class="playerinfo" v-for="table in playerinfo">
+        <type><h1>Gender</h1><h2>{{table.sex}}</h2></type>
+        <type><h1>Age</h1><h2>{{table.dateofbirth}}</h2></type>
+        <type><h1>Cash</h1><h2 style=" color: #ffffff;">{{table.cash}}$</h2></type>
+        <type><h1>Bank</h1><h2 style="color: #ffffff">{{table.bank}}$</h2></type>
+        <type><h1>Online</h1><h2>{{table.onlinetime}}</h2></type>
+      </div>
+
+      <div class="newcharacter" v-if="creater">
+        <!-- <form action="action"> -->
+          <icon><images><h1>New Character</h1></images></icon>
+          <firstname><icon><input type="text" v-model="firstname" placeholder="First Name" required/></icon></firstname>
+          <lastname><icon><input v-model="lastname" placeholder="Last Name" required/></icon></lastname>
+          <date><icon><input v-model="dateofbirth" type="date" placeholder="mm/dd/yyyy" required/></icon></date>
+          <sex><icon><select v-model="sex" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select></icon></sex>
+          
+          <create><icon><input type="submit" value="Create a character"  @click="createCharacter()"></icon></create>
+        <!-- </form> -->
+      </div>
+
+
+      <div v-if="selectionmenu">
+        <div class="selection">
+          <border @click="addSpace(data)" :class="{ select : select == data.firstname }" v-for="data in multicharacter"><icon><h1>{{data.firstname}} {{data.lastname}}</h1><h2>Level {{data.level}}</h2></icon><right></right></border>
+          <remove @click="deleteCharacter()"><icon><h1>Delete Character</h1></icon></remove>
+          <add @click="addCharacter()"><icon><h1>Add Character</h1></icon></add>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <script src="./assets/library.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script src="./vue.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  </body>
+</html>
